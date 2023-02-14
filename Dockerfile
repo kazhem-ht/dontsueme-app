@@ -10,7 +10,7 @@ COPY requirements.txt ${APP_HOME}/
 RUN pip install --no-cache-dir -r ${APP_HOME}/requirements.txt
 
 
-COPY dockerfiles/run.sh /run.sh
+COPY scripts/run.sh /run.sh
 RUN chmod +x /run.sh
 COPY ./project /app
 EXPOSE 8000

@@ -34,7 +34,7 @@ logging.basicConfig(stream=sys.stdout,
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-iex560z2^#h18ea%w&ev3-tpad!$f=fb)!ca@aa@&3*8gnw^2d"
+SECRET_KEY = os.getenv("SECRET_KEY", "Some secret key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 env_debug = os.getenv("APP_DEBUG", 'True')
@@ -50,6 +50,7 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
+    "mozilla_django_oidc",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
@@ -68,6 +69,12 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    "common.auth.MyAuthenticationBackend",
+    # ...
+)
 
 ROOT_URLCONF = "project.urls"
 
@@ -150,7 +157,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
+LOGIN_REDIRECT_URL = "common:index"
+LOGOUT_REDIRECT_URL = "common:index"
 
 
 #### APP settings
@@ -171,3 +179,24 @@ S3_ENDPOINT_URL = os.getenv(
     "S3_ENDPOINT_URL", "https://storage.yandexcloud.net")
 S3_BUCKET_NAME= os.getenv("S3_BUCKER_NAME", "yc-auth-test")
 S3_BUCKET_FOLDER=os.getenv("S3_BUCKET_FOLDER", "reports")
+S3_METADATA_FILENAME = os.getenv("S3_METADATA_FILENAME", "metadata.json")
+
+
+OIDC_ENABLED = False
+env_oidc = os.getenv("OIDC_ENABLED", 'False')
+if env_oidc.lower() in ['true', 'false']:
+    OIDC_ENABLED = eval(env_oidc.lower().title())
+else:
+    OIDC_ENABLED = False
+OIDC_BUTTON_NAME = os.getenv("OIDC_BUTTON_NAME", "OIDC")
+
+OIDC_RP_CLIENT_ID = os.getenv("OIDC_CLIENT_ID", "dontsueme-app")
+OIDC_RP_CLIENT_SECRET = os.getenv("OIDC_CLIENT_SECRET", None)
+OIDC_RP_SIGN_ALGO = os.getenv("OIDC_SIGN_ALGO", "RS256")
+
+
+# GET from https://{keycloakhost}:{keycloakport}/realms/{realm}/.well-known/openid-configuration
+OIDC_OP_AUTHORIZATION_ENDPOINT = os.getenv("OIDC_AUTHORIZATION_ENDPOINT", None)
+OIDC_OP_TOKEN_ENDPOINT = os.getenv("OIDC_TOKEN_ENDPOINT", None)
+OIDC_OP_USER_ENDPOINT = os.getenv("OIDC_USER_ENDPOINT", None)
+OIDC_OP_JWKS_ENDPOINT = os.getenv("OIDC_JWKS_ENDPOINT", None)

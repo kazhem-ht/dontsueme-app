@@ -1,0 +1,61 @@
+{% extends 'common/base.html' %}
+{% load bootstrap4 %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+DontSueMe Login
+{% endblock %}
+
+{% load i18n static %}
+{% block header %}
+{%endblock%}
+{% block content %}
+
+    <section class="py-2">
+        <div class="container my-2">
+            <div class="d-flex justify-content-center">
+                {% if form.errors and not form.non_field_errors %}
+                <p class="errornote">
+                    {% blocktranslate count counter=form.errors.items|length %}Please correct the error below.{% plural %}Please correct
+                    the errors below.{% endblocktranslate %}
+                </p>
+                {% endif %}
+
+                {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                <p class="errornote">
+                    {{ error }}
+                </p>
+                {% endfor %}
+                {% endif %}
+                <div class="my-5">
+                    <h2 style="text-align:center">Авторизация</h2>
+                    <p style="text-align:center"><img id="logo-image" alt="Logo" src="{% static 'img/logo-dsm.png' %}"></p>
+                    {% if user.is_authenticated %}
+                        <p class="errornote">
+                            {% blocktranslate trimmed %}
+                            You are authenticated as {{ username }}, but are not authorized to
+                            access this page. Would you like to login to a different account?
+                            {% endblocktranslate %}
+                        </p>
+                    {% endif %}
+                    <form role="form" method="post" action="{{ app_path }}" id="login-form">
+                        {% csrf_token %}
+                        {% bootstrap_field form.username show_label=False %}
+                        {% bootstrap_field form.password show_label=False %}
+
+                        {% bootstrap_button "Войти" button_type="submit" button_class="btn-light" %}
+                        {% if oidc_enabled %}
+                        {% url 'oidc_authentication_init' as oidc_url %}
+                        {% bootstrap_button oidc_button_name button_type="link" href=oidc_url button_class="btn-light" %}
+                        {% endif %}
+                        {% bootstrap_button "Очистить" button_type="reset" button_class="btn-light" %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+{%endblock%}

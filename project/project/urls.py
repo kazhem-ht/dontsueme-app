@@ -17,20 +17,17 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
+from django.conf import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("common.urls", namespace="common")),
     path("reports/", include("reports.urls", namespace="reports")),
-    path("accounts/login/",  LoginView.as_view(template_name='admin/login.html',
+    path("accounts/login/",  LoginView.as_view(template_name='common/login.html',
                                                redirect_authenticated_user=True,
-                                               next_page=reverse_lazy(
-                                                   'common:index'),
-                                               extra_context={
-                                                 'title': 'Login',
-                                                 'site_title': 'DontSueMe',
-                                                 'site_header': 'DontSueMe Login'},),
+                                               extra_context={'oidc_enabled': settings.OIDC_ENABLED,
+                                                              'oidc_button_name': settings.OIDC_BUTTON_NAME},),
          name="login",),
-    path("accounts/logout/", LogoutView.as_view(next_page=reverse_lazy('common:index')),
-         name="logout")
+    path("accounts/logout/", LogoutView.as_view(), name="logout"),
+    path('oidc/', include('mozilla_django_oidc.urls')),
 ]
