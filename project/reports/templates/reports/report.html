@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+    </style>
+
+    <body>
+
+        <table style="width:500px">
+            <tr>
+                <td>ID отчета</td>
+                <td>{{report_db.id}}</td>
+            </tr>
+            <tr>
+                <td>ФИО клиента</td>
+                <td>{{report_db.client_name}}</td>
+            </tr>
+            <tr>
+                <td>Номер дела</td>
+                <td>{{report_db.case_number}}</td>
+            </tr>
+            <tr>
+                <td>Приговор</td>
+                <td>{{report_db.get_case_result_display}}</td>
+            </tr>
+            <tr>
+                <td>Комментарий</td>
+                <td>{{report_db.comment}}</td>
+            </tr>
+            <tr>
+                <td>Логин юриста</td>
+                <td>{{report_db.user_created_login}}</td>
+            </tr>
+            <tr>
+                <td>Имя юриста</td>
+                <td>{{report_db.user_created_name}}</td>
+            </tr>
+            <tr>
+                <td>Email юриста</td>
+                <td>{{report_db.user_created_email}}</td>
+            </tr>
+        </table>
+    </body>
+</html>

@@ -1,0 +1,22 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
+@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700,300,100);
+
+* {
+    font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+    color: #484849;
+}
+
+body {
+    /*font-size: .875rem;*/
+}
+
+#logo-image {
+    height: 2em;
+    padding-right: 1em;
+}
+
+#index-image {
+    width: 100%;
+    max-width: 600px;
+    padding-right: 1em;
+}

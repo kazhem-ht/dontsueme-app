@@ -1,0 +1,32 @@
+{% extends 'common/base.html' %}
+{% load bootstrap4 %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+DontSueMe Main
+{% endblock %}
+
+{% load i18n admin_modify %}
+
+{% block content %}
+    <section class="py-2">
+        <div class="container my-2">
+            <div class="d-flex justify-content-center">
+                <div class="my-5">
+                    <h2>Отчет о деле клиента</h2>
+                    <form role="form" method="post">
+                        {% csrf_token %}
+                        {% bootstrap_field form.client show_label=False %}
+                        {% bootstrap_field form.case_number show_label=False %}
+                        {% bootstrap_field form.guilty show_label=False %}
+                        {% bootstrap_field form.comment show_label=False %}
+                        {% bootstrap_button "Создать" button_type="submit" button_class="btn-light" %}
+                        {% bootstrap_button "Очистить" button_type="reset" button_class="btn-light" %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{%endblock%}

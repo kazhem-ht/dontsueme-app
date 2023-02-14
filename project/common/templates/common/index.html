@@ -1,0 +1,30 @@
+{% extends 'common/base.html' %}
+{% load bootstrap4 %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+DontSueMe Main
+{% endblock %}
+
+{% load i18n admin_modify %}
+
+{% block content %}
+    <section class="py-2">
+        <div class="container my-2">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 my-5 ">
+                    <img id="index-image" alt="Logo" src="{% static 'img/logo-dsm.png' %}">
+                </div>
+                <div class="col-lg-6 my-5">
+                    <h2>Добро пожаловать в цифровой сервис DontSueMe</h2>
+                    <p class="lead">DontSueMe помогает своим клиентам избежать крупных штрафов.</p>
+                    <p class="mb-0">Компания лидирует в своей отрасли, но работа с документами и
+                    бесконечные согласования отнимают слишком много времени у юристов. Сервис помогает автомотизировать многие рутинные процессы</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+{%endblock%}
