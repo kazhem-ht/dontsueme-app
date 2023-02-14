@@ -6,6 +6,7 @@ __pycache__
 db.sqlite3
 media
 
+
 # Backup files #
 *.bak
 
@@ -141,3 +142,4 @@ GitHub.sublime-settings
 docker-compose.yml
 db.sqlite3
 .env
+.DS_Store
