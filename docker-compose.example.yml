@@ -9,7 +9,6 @@ services:
       - "./data:/data"
     environment:
       DB_DIR: "/data"
-      SECRET_KEY: "django-insecure-iex560z2^#h18ea%w&ev3-tpad!$f=fb)!ca@aa@&3*8gnw^2d"
       YC_LOCKBOX_SECRET_ID: "e60000000000000000"
       # by default should be claimed from meta
       YC_IAM_TOKEN_METADATA_URL: "http://169.254.169.254/computeMetadata/v1/instance/service-accounts/default/token"
@@ -22,11 +21,7 @@ services:
       # OIDC settings
       OIDC_ENABLED: "True"
       OIDC_BUTTON_NAME: "Keycloak"
-      # OIDC client settings
+      OIDC_DOMAIN: "keycloak.example.com"
+      OIDC_REALM_NAME: "master"
       OIDC_CLIENT_ID: "dontsueme-app"
       OIDC_CLIENT_SECRET: "client_secret"
-      # # OIDC realm settings GET from https://{keycloakhost}:{keycloakport}/realms/{realm}/.well-known/openid-configuration
-      OIDC_AUTHORIZATION_ENDPOINT: "https://127.0.0.1/realms/master/protocol/openid-connect/auth"
-      OIDC_TOKEN_ENDPOINT: "https://127.0.0.1/realms/master/protocol/openid-connect/token"
-      OIDC_USER_ENDPOINT: "https://127.0.0.1/realms/master/protocol/openid-connect/userinfo"
-      OIDC_JWKS_ENDPOINT: "https://127.0.0.1/realms/master/protocol/openid-connect/certs"

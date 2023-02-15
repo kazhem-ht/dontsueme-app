@@ -7,6 +7,7 @@ Name | Default | Description
 *DB_DIR* | `APP_DIR` | Folder to hold `db.sqlite3` file
 *APP_DEBUG* | `True` | True\False - Django Debug mode
 *ALLOWED_HOSTS* | `*` | Django allowed hosts, splitted by `,`
+*SECRET_KEY* | `django-insecure-iex560z2^#h18ea%w&ev3-tpad!$f=fb)!ca@aa@&3*8gnw^2d` | Django secret token for csfr. You can generate using <https://djecrety.ir/>
 --- | --- | ---
 *DEFAULT_SUPERUSER_NAME* | `dontsueme` | Default superuser
 *DEFAULT_SUPERUSER_EMAIL* | `dont@sue.me` | Default superuser email
@@ -26,14 +27,11 @@ Name | Default | Description
 --- | --- | ---
 *OIDC_ENABLED* | `False` | OIDC login enabled
 *OIDC_BUTTON_NAME* | `OIDC` | OIDC button display name
+*OIDC_DOMAIN* | `keycloak.example.com` | OIDC provider domain
+*OIDC_REALM_NAME* | `master` | OIDC realm name to generate endpoints from <https://{keycloakhost}:{keycloakport}/realms/{realm}/.well-known/openid-configuration>
 *OIDC_CLIENT_ID* | `dontsueme-app` | OIDC client id
 *OIDC_CLIENT_SECRET* | `dontsueme-app` | OIDC client secret
 *OIDC_SIGN_ALGO* | `RS256` | OIDC realm sign algorithm
-*OIDC_AUTHORIZATION_ENDPOINT* | `None` | GET from <https://{keycloakhost}:{keycloakport}/realms/{realm}/.well-known/openid-configuration> by field `authorization_endpoint`
-*OIDC_TOKEN_ENDPOINT* | `None` | GET from <https://{keycloakhost}:{keycloakport}/realms/{realm}/.well-known/openid-configuration> by field `token_endpoint`
-*OIDC_USER_ENDPOINT* | `None` | GET from <https://{keycloakhost}:{keycloakport}/realms/{realm}/.well-known/openid-configuration> by field `userinfo_endpoint`
-*OIDC_JWKS_ENDPOINT* | `None` | GET from <https://{keycloakhost}:{keycloakport}/realms/{realm}/.well-known/openid-configuration> by field `jwks_uri`
-
 ## How to run
 
 - Copy `docker-compose.example.yml`

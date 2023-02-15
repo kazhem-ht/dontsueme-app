@@ -34,7 +34,8 @@ logging.basicConfig(stream=sys.stdout,
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY", "Some secret key")
+SECRET_KEY = os.getenv(
+    "SECRET_KEY", "django-insecure-iex560z2^#h18ea%w&ev3-tpad!$f=fb)!ca@aa@&3*8gnw^2d")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 env_debug = os.getenv("APP_DEBUG", 'True')
@@ -195,8 +196,11 @@ OIDC_RP_CLIENT_SECRET = os.getenv("OIDC_CLIENT_SECRET", None)
 OIDC_RP_SIGN_ALGO = os.getenv("OIDC_SIGN_ALGO", "RS256")
 
 
+OIDC_DOMAIN = os.getenv("OIDC_DOMAIN", "keycloak.example.com")
+OIDC_REALM_NAME = os.getenv("OIDC_REALM_NAME", "master")
+
 # GET from https://{keycloakhost}:{keycloakport}/realms/{realm}/.well-known/openid-configuration
-OIDC_OP_AUTHORIZATION_ENDPOINT = os.getenv("OIDC_AUTHORIZATION_ENDPOINT", None)
-OIDC_OP_TOKEN_ENDPOINT = os.getenv("OIDC_TOKEN_ENDPOINT", None)
-OIDC_OP_USER_ENDPOINT = os.getenv("OIDC_USER_ENDPOINT", None)
-OIDC_OP_JWKS_ENDPOINT = os.getenv("OIDC_JWKS_ENDPOINT", None)
+OIDC_OP_AUTHORIZATION_ENDPOINT = f"https://{OIDC_DOMAIN}/realms/{OIDC_REALM_NAME}/protocol/openid-connect/auth"
+OIDC_OP_TOKEN_ENDPOINT = f"https://{OIDC_DOMAIN}/realms/{OIDC_REALM_NAME}/protocol/openid-connect/token"
+OIDC_OP_USER_ENDPOINT = f"https://{OIDC_DOMAIN}/realms/{OIDC_REALM_NAME}/protocol/openid-connect/userinfo"
+OIDC_OP_JWKS_ENDPOINT = f"https://{OIDC_DOMAIN}/realms/{OIDC_REALM_NAME}/protocol/openid-connect/certs"
