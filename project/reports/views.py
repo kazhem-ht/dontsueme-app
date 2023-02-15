@@ -104,9 +104,8 @@ class CreateReportView(LoginRequiredMixin, FormView):
                 if 200 <= response.status_code < 300:
                     response_data = response.json()
                     iam_token = response_data["access_token"]
-
                     logging.info("IAM token recieved from metadata. Expires in  %s",
-                                 iam_token['expires_in'])
+                                 response_data['expires_in'])
                 else:
                     logging.error("Metadata response failed: %s: %s",
                                 response.status_code, response.text)
