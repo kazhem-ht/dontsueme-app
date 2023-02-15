@@ -44,7 +44,7 @@ if env_debug.lower() in ['true', 'false']:
 else:
     DEBUG = False
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
-
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 
@@ -71,11 +71,10 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-AUTHENTICATION_BACKENDS = (
+AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    "common.auth.MyAuthenticationBackend",
     # ...
-)
+]
 
 ROOT_URLCONF = "project.urls"
 
@@ -189,6 +188,10 @@ if env_oidc.lower() in ['true', 'false']:
     OIDC_ENABLED = eval(env_oidc.lower().title())
 else:
     OIDC_ENABLED = False
+
+if OIDC_ENABLED:
+    AUTHENTICATION_BACKENDS.append("common.auth.MyAuthenticationBackend")
+
 OIDC_BUTTON_NAME = os.getenv("OIDC_BUTTON_NAME", "OIDC")
 
 OIDC_RP_CLIENT_ID = os.getenv("OIDC_CLIENT_ID", "dontsueme-app")
