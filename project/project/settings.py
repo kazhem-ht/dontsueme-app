@@ -171,7 +171,7 @@ DJANGO_SU_PASSWORD = os.getenv('DEFAULT_SUPERUSER_PASSWORD', 'dontsueme')
 YC_LOCKBOX_SECRET_ID = os.getenv('YC_LOCKBOX_SECRET_ID', None)
 # by default should be claimed from meta
 YC_IAM_TOKEN = os.getenv("YC_IAM_TOKEN", None)
-YC_IAM_TOKEN_METADATA_URL = os.getenv("YC_IAM_TOKEN_METADATA_URL",
+YC_IAM_TOKEN_METADATA_URL = os.getenv("IAM_TOKEN_URL",
                                       "http://169.254.169.254/computeMetadata/v1/instance/service-accounts/default/token")
 
 S3_KEY = os.getenv("S3_KEY", None)  # format ACCESS_KEY:SECRET_KEY
@@ -195,12 +195,8 @@ OIDC_RP_CLIENT_ID = os.getenv("OIDC_CLIENT_ID", "dontsueme-app")
 OIDC_RP_CLIENT_SECRET = os.getenv("OIDC_CLIENT_SECRET", None)
 OIDC_RP_SIGN_ALGO = os.getenv("OIDC_SIGN_ALGO", "RS256")
 
-
-OIDC_DOMAIN = os.getenv("OIDC_DOMAIN", "keycloak.example.com")
-OIDC_REALM_NAME = os.getenv("OIDC_REALM_NAME", "master")
-
 # GET from https://{keycloakhost}:{keycloakport}/realms/{realm}/.well-known/openid-configuration
-OIDC_OP_AUTHORIZATION_ENDPOINT = f"https://{OIDC_DOMAIN}/realms/{OIDC_REALM_NAME}/protocol/openid-connect/auth"
-OIDC_OP_TOKEN_ENDPOINT = f"https://{OIDC_DOMAIN}/realms/{OIDC_REALM_NAME}/protocol/openid-connect/token"
-OIDC_OP_USER_ENDPOINT = f"https://{OIDC_DOMAIN}/realms/{OIDC_REALM_NAME}/protocol/openid-connect/userinfo"
-OIDC_OP_JWKS_ENDPOINT = f"https://{OIDC_DOMAIN}/realms/{OIDC_REALM_NAME}/protocol/openid-connect/certs"
+OIDC_OP_AUTHORIZATION_ENDPOINT = os.getenv("OIDC_AUTHORIZATION_ENDPOINT", None)
+OIDC_OP_TOKEN_ENDPOINT = os.getenv("OIDC_TOKEN_ENDPOINT", None)
+OIDC_OP_USER_ENDPOINT = os.getenv("OIDC_USER_ENDPOINT", None)
+OIDC_OP_JWKS_ENDPOINT = os.getenv("OIDC_JWKS_ENDPOINT", None)

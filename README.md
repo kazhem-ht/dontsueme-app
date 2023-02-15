@@ -16,7 +16,7 @@ Name | Default | Description
 *YC_LOCKBOX_SECRET_ID* | `None` | Yandex Lockbox secret id to get S3 static key
 --- | --- | ---
 *YC_IAM_TOKEN* | `None` | IAM token, by default is claimed from metadata
-*YC_IAM_TOKEN_METADATA_URL* | http://169.254.169.254/computeMetadata/v1/instance/service-accounts/default/token | Metadata service url to claim IAM token
+*IAM_TOKEN_URL* | <http://169.254.169.254/computeMetadata/v1/instance/service-accounts/default/token> | Metadata service url to claim IAM token
 --- | --- | ---
 *S3_KEY* | `None` | format `ACCESS_KEY:SECRET_KEY`. By default should be claimed from Lockbox
 *S3_REGION* | `ru-central1` | S3-region. Not to be changed for Yandex Object Storage
@@ -27,11 +27,13 @@ Name | Default | Description
 --- | --- | ---
 *OIDC_ENABLED* | `False` | OIDC login enabled
 *OIDC_BUTTON_NAME* | `OIDC` | OIDC button display name
-*OIDC_DOMAIN* | `keycloak.example.com` | OIDC provider domain
-*OIDC_REALM_NAME* | `master` | OIDC realm name to generate endpoints from <https://{keycloakhost}:{keycloakport}/realms/{realm}/.well-known/openid-configuration>
 *OIDC_CLIENT_ID* | `dontsueme-app` | OIDC client id
 *OIDC_CLIENT_SECRET* | `dontsueme-app` | OIDC client secret
 *OIDC_SIGN_ALGO* | `RS256` | OIDC realm sign algorithm
+*OIDC_AUTHORIZATION_ENDPOINT* | `None` | GET from <https://{keycloakhost}:{keycloakport}/realms/{realm}/.well-known/openid-configuration> by field `authorization_endpoint`
+*OIDC_TOKEN_ENDPOINT* | `None` | GET from <https://{keycloakhost}:{keycloakport}/realms/{realm}/.well-known/openid-configuration> by field `token_endpoint`
+*OIDC_USER_ENDPOINT* | `None` | GET from <https://{keycloakhost}:{keycloakport}/realms/{realm}/.well-known/openid-configuration> by field `userinfo_endpoint`
+*OIDC_JWKS_ENDPOINT* | `None` | GET from <https://{keycloakhost}:{keycloakport}/realms/{realm}/.well-known/openid-configuration> by field `jwks_uri`
 ## How to run
 
 - Copy `docker-compose.example.yml`
