@@ -177,7 +177,7 @@ S3_KEY = os.getenv("S3_KEY", None)  # format ACCESS_KEY:SECRET_KEY
 S3_REGION = os.getenv("S3_REGION", "ru-central1")
 S3_ENDPOINT_URL = os.getenv(
     "S3_ENDPOINT_URL", "https://storage.yandexcloud.net")
-S3_BUCKET_NAME= os.getenv("S3_BUCKER_NAME", "yc-auth-test")
+S3_BUCKET_NAME= os.getenv("S3_BUCKET_NAME", "yc-auth-test")
 S3_BUCKET_FOLDER=os.getenv("S3_BUCKET_FOLDER", "reports")
 S3_METADATA_FILENAME = os.getenv("S3_METADATA_FILENAME", "metadata.json")
 
