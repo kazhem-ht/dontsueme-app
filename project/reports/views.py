@@ -39,11 +39,11 @@ class CreateReportView(LoginRequiredMixin, FormView):
         s3.put_object(Bucket=settings.S3_BUCKET_NAME, Key=object_name,
                       Body=db_report.report_html, StorageClass='COLD')
         # Put metadata
-        metadata_filename = f"{settings.S3_BUCKET_FOLDER}/{settings.S3_METADATA_FILENAME}"
-        metadata_content = {"total_reports": Report.objects.all().count(),
-                            "last_report_upload": str(datetime.datetime.now())}
-        s3.put_object(Bucket=settings.S3_BUCKET_NAME, Key=metadata_filename,
-                      Body=json.dumps(metadata_content, indent=2), StorageClass='COLD')
+        # metadata_filename = f"{settings.S3_BUCKET_FOLDER}/{settings.S3_METADATA_FILENAME}"
+        # metadata_content = {"total_reports": Report.objects.all().count(),
+        #                     "last_report_upload": str(datetime.datetime.now())}
+        # s3.put_object(Bucket=settings.S3_BUCKET_NAME, Key=metadata_filename,
+        #               Body=json.dumps(metadata_content, indent=2), StorageClass='COLD')
         return object_name
 
 
