@@ -22,8 +22,32 @@ class CreateReportView(LoginRequiredMixin, FormView):
     template_name = "reports/create_report.html"
     form_class = ReportForm
 
-    @staticmethod
-    def put_report_to_s3(db_report: Report, s3_key: dict) -> str:
+    def get_metadata_object(self, s3_client: dict):
+
+        # Get metadata
+        metadata_filename = f"{settings.S3_BUCKET_FOLDER}/{settings.S3_METADATA_FILENAME}"
+        try:
+            metadata_object = s3_client.get_object(
+                Bucket=settings.S3_BUCKET_NAME, Key=metadata_filename)
+            metadata_content = metadata_object['Body'].read().decode()
+            logging.info(f"Metadata content: {metadata_content}")
+            messages.add_message(
+                self.request, messages.INFO,
+                f'Metadata Content: {metadata_content}')
+        except (s3_client.exceptions.NoSuchKey) as e:
+            # Put file if not exists
+            logging.warning(
+                f"Metadata file {metadata_filename} not exists. Creating")
+            metadata_content = {"Hello": "World"}
+            s3_client.put_object(Bucket=settings.S3_BUCKET_NAME, Key=metadata_filename,
+                                 Body=json.dumps(metadata_content), StorageClass='COLD')
+        except (s3_client.exceptions.ClientError) as e:
+            logging.warning(e)
+            messages.add_message(
+                self.request, messages.WARNING,
+                f'Metadata not received: {e}')
+
+    def put_report_to_s3(self, db_report: Report, s3_key: dict) -> str:
 
         s3_config = Config(region_name=settings.S3_REGION)
         s3_session = boto3.session.Session(
@@ -35,15 +59,12 @@ class CreateReportView(LoginRequiredMixin, FormView):
             config=s3_config
         )
 
+        self.get_metadata_object(s3)
+
         object_name = f"{settings.S3_BUCKET_FOLDER}/{db_report.user_created_login}/{db_report.report_name}"
         s3.put_object(Bucket=settings.S3_BUCKET_NAME, Key=object_name,
                       Body=db_report.report_html, StorageClass='COLD')
-        # Put metadata
-        # metadata_filename = f"{settings.S3_BUCKET_FOLDER}/{settings.S3_METADATA_FILENAME}"
-        # metadata_content = {"total_reports": Report.objects.all().count(),
-        #                     "last_report_upload": str(datetime.datetime.now())}
-        # s3.put_object(Bucket=settings.S3_BUCKET_NAME, Key=metadata_filename,
-        #               Body=json.dumps(metadata_content, indent=2), StorageClass='COLD')
+
         return object_name
 
 
@@ -94,6 +115,7 @@ class CreateReportView(LoginRequiredMixin, FormView):
 
     def get_yc_iam_token(self) -> Optional[str]:
         iam_token = settings.YC_IAM_TOKEN
+        logging.info(f"IAM token: {iam_token}")
         if not iam_token:
             logging.info("Requesting metadata %s for iam token",
                          settings.YC_IAM_TOKEN_METADATA_URL)
